@@ -16,6 +16,11 @@ module.exports = {
         primaryText: "#333333",            
         blue: "#0040FF",            
         placeholder: "#666666",     
+        navbar: "#ABE29D",     
+      },
+      spacing: {
+        'page': '2rem',    
+        'page-mobile': '1rem', 
       },
     },
   },

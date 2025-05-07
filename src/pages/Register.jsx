@@ -100,11 +100,11 @@ export default function Register() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background px-4">
-      <div className="bg-card p-8 rounded-xl shadow-xl w-full max-w-xl relative border-2 border-gray-300">
+    <div className="min-h-screen flex items-center justify-center bg-background px-page-mobile sm:px-page mt-page-mobile sm:mt-page">
+      <div className="bg-card p-8 rounded-xl shadow-md sm:shadow-xl w-full max-w-md sm:max-w-lg md:max-w-xl mx-auto relative border-2 border-gray-300">
         <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-black/5 rounded-xl"></div>
         <div className="relative z-10">
-          <h1 className="font-poppins text-2xl font-bold text-center text-blue mb-6">
+          <h1 className="font-poppins text-xl sm:text-2xl md:text-3xl font-bold text-center text-blue mb-6">
             Create your account
           </h1>
 
@@ -116,10 +116,10 @@ export default function Register() {
           )}
 
           {/* Skjema for å registrering */}
-          <form onSubmit={handleSubmit} className="space-y-6 font-sans">
+          <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6 font-sans">
             {/* brukernavn */}
             <div>
-              <label className="text-primaryText block mb-1">Name</label>
+              <label className="text-primaryText block mb-1 text-sm sm:text-base">Name</label>
               <input
                 type="text"
                 name="name"
@@ -128,16 +128,16 @@ export default function Register() {
                   setFormData({ ...formData, name: e.target.value })
                 }
                 required
-                className={`w-full px-4 py-2 border-2 rounded-full bg-white text-primaryText placeholder:text-placeholder focus:outline-none focus:border-greenDark focus:ring-1 focus:ring-greenDark ${
+                className={`w-full px-4 py-2 border-2 rounded-full bg-white text-primaryText text-base sm:text-lg placeholder:text-placeholder focus:outline-none focus:border-greenDark focus:ring-1 focus:ring-greenDark ${
                   errorField === "name" ? "border-red" : ""
                 }`}
                 placeholder="Example"
               />
             </div>
 
-            {/* mail */}
+            {/* mail field */}
             <div>
-              <label className="text-primaryText block mb-1">Email</label>
+              <label className="text-primaryText block mb-1 text-sm sm:text-base">Email</label>
               <input
                 type="email"
                 name="email"
@@ -148,16 +148,16 @@ export default function Register() {
                   setMessage(null);
                 }}
                 required
-                className={`w-full px-4 py-2 border-2 rounded-full bg-white text-primaryText placeholder:text-placeholder focus:outline-none focus:border-greenDark focus:ring-1 focus:ring-greenDark ${
+                className={`w-full px-4 py-2 border-2 rounded-full bg-white text-primaryText text-base sm:text-lg placeholder:text-placeholder focus:outline-none focus:border-greenDark focus:ring-1 focus:ring-greenDark ${
                   errorField === "email" ? "border-red" : ""
                 }`}
                 placeholder="example@stud.noroff.no"
               />
             </div>
 
-            {/* Passord */}
+            {/* Passord field */}
             <div>
-              <label className="text-primaryText block mb-1">Password</label>
+              <label className="text-primaryText block mb-1 text-sm sm:text-base">Password</label>
               <input
                 type="password"
                 name="password"
@@ -166,16 +166,16 @@ export default function Register() {
                   setFormData({ ...formData, password: e.target.value })
                 }
                 required
-                className={`w-full px-4 py-2 border-2 rounded-full bg-white text-primaryText placeholder:text-placeholder focus:outline-none focus:border-greenDark focus:ring-1 focus:ring-greenDark ${
+                className={`w-full px-4 py-2 border-2 rounded-full bg-white text-primaryText text-base sm:text-lg placeholder:text-placeholder focus:outline-none focus:border-greenDark focus:ring-1 focus:ring-greenDark ${
                   errorField === "password" ? "border-red" : ""
                 }`}
                 placeholder="********"
               />
             </div>
 
-            {/* Avatar */}
+            {/* Avatar field */}
             <div>
-              <label className="text-primaryText block mb-1">
+              <label className="text-primaryText block mb-1 text-sm sm:text-base">
                 Avatar (optional, can be set later)
               </label>
               <input
@@ -185,7 +185,7 @@ export default function Register() {
                 onChange={(e) =>
                   setFormData({ ...formData, avatar: e.target.value })
                 }
-                className={`w-full px-4 py-2 border-2 rounded-full bg-white text-primaryText placeholder:text-placeholder focus:outline-none focus:border-greenDark focus:ring-1 focus:ring-greenDark ${
+                className={`w-full px-4 py-2 border-2 rounded-full bg-white text-primaryText text-base sm:text-lg placeholder:text-placeholder focus:outline-none focus:border-greenDark focus:ring-1 focus:ring-greenDark ${
                   errorField === "avatar" ? "border-red" : ""
                 }`}
                 placeholder="Paste img-url here"
@@ -194,7 +194,7 @@ export default function Register() {
 
             {/* Venue manager knapper*/}
             <div>
-              <label className="text-primaryText block mb-2">
+              <label className="text-primaryText block mb-2 text-sm sm:text-base">
                 Are you going to rent out? <span className="text-red">*</span>
               </label>
               <div className="flex gap-4">
@@ -225,7 +225,7 @@ export default function Register() {
               </div>
             </div>
 
-            {/* Submit */}
+            {/* Submit button */}
             <button
               type="submit"
               disabled={loading}
@@ -236,7 +236,7 @@ export default function Register() {
           </form>
 
           {/* Login link */}
-          <p className="text-xs text-center mt-4">
+          <p className="text-xs sm:text-sm text-center mt-4">
             Already have an account?{" "}
             <a href="/login" className="text-red hover:underline">
               Sign in
