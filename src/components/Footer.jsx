@@ -3,7 +3,7 @@ import React from "react";
 export default function Footer() {
   return (
     <footer className="bg-greenDark/30 py-8 px-4 mt-12 font-sans">
-      <div className="bg-green p-8 rounded-md w-full max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-8">
+      <div className="bg-green p-8 rounded-md w-full max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-center gap-8">
         <div className="text-center">
           <div className="font-semibold">Phone:</div>
           <div>+47 55324567</div>

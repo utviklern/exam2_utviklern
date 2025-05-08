@@ -1,5 +1,8 @@
 import React from "react";
 
+const fallbackUrl =
+  "https://cdn.pixabay.com/photo/2017/11/10/04/47/image-2935360_1280.png";
+
 export default function VenueCard({ venue }) {
   // stjerner basert på rating
   function renderStars(rating) {
@@ -13,9 +16,15 @@ export default function VenueCard({ venue }) {
   }
 
   // fallback hvis bilde mangler
-  const imageUrl =
-    venue.media?.[0]?.url || "https://via.placeholder.com/300x200";
+  const imageUrl = venue.media?.[0]?.url || fallbackUrl;
   const imageAlt = venue.media?.[0]?.alt || venue.name || "Venue image";
+
+  // feilhåndtering av bilde
+  function handleImgError(e) {
+    if (e.target.src !== fallbackUrl) {
+      e.target.src = fallbackUrl;
+    }
+  }
 
   return (
     // Kort for venue
@@ -27,6 +36,7 @@ export default function VenueCard({ venue }) {
           src={imageUrl}
           alt={imageAlt}
           className="w-full h-40 object-cover rounded-t-xl mb-2"
+          onError={handleImgError}
         />
         <div className="p-4 flex flex-col flex-1">
           {/* navn og maks gjester */}
