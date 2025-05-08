@@ -19,7 +19,7 @@ export default function VenueCard({ venue }) {
 
   return (
     // Kort for venue
-    <div className="bg-card p-4 rounded-xl shadow-md sm:shadow-xl border-2 border-gray-300 relative overflow-hidden flex flex-col font-roboto">
+    <div className="bg-card p-4 rounded-xl shadow-md sm:shadow-xl border-2 border-gray-300 relative overflow-hidden flex flex-col font-sans">
       <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-black/5 rounded-xl pointer-events-none"></div>
       <div className="relative z-10 flex flex-col flex-1">
         {/* Bilde av venue */}

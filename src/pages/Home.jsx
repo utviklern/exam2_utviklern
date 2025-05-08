@@ -37,7 +37,7 @@ export default function Home() {
   }
 
   return (
-    <div className="mt-page px-page font-roboto">
+    <div className="mt-page px-page font-sans">
       <h1 className="font-poppins text-2xl font-bold text-center text-blue mb-8">
         All venues
       </h1>
