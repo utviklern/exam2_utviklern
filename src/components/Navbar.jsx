@@ -1,13 +1,21 @@
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import logo from "../assets/logo.png";
+import { useNavigate } from "react-router-dom";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("accessToken"));
+  const navigate = useNavigate();
+
+  function handleLogout() {
+    localStorage.removeItem("accessToken");
+    setIsLoggedIn(false);
+    navigate("/login");
+  }
 
   return (
     <nav className="bg-green max-[1053px]:bg-transparent w-full py-4 px-4 flex items-center relative z-50">
-      {/* Logo + Hamburger */}
       <div className="flex flex-1 min-w-0 flex-row max-[1053px]:flex-row-reverse items-center justify-between">
         {/* Hamburger */}
         <button
@@ -56,25 +64,34 @@ export default function Navbar() {
       </div>
 
       <div className="flex-1 flex justify-end max-[1053px]:hidden">
-        <NavLink
-          to="/login"
-          className="text-base sm:text-lg md:text-xl hover:underline"
-        >
-          Login
-        </NavLink>
+        {!isLoggedIn ? (
+          <NavLink
+            to="/login"
+            className="text-base sm:text-lg md:text-xl hover:underline"
+          >
+            Login
+          </NavLink>
+        ) : (
+          <button
+            onClick={handleLogout}
+            className="text-base sm:text-lg md:text-xl hover:underline bg-transparent border-none cursor-pointer"
+          >
+            Log out
+          </button>
+        )}
       </div>
 
       {/* Mobile Menu */}
       {menuOpen && (
         <>
-          {/* Overlay */}
+          {/* overlay */}
           <div
             className="fixed inset-0 z-40 bg-black/10"
             onClick={() => setMenuOpen(false)}
             aria-label="Close menu overlay"
           />
 
-          {/* Dropdown menu */}
+          {/* Dropdown */}
           <div className="absolute left-1/2 top-full -translate-x-1/2 mt-4 bg-white shadow-xl rounded-xl p-8 flex flex-col gap-6 min-w-[80vw] max-w-md z-50">
             <NavLink
               to="/"
@@ -97,13 +114,22 @@ export default function Navbar() {
             >
               Profile
             </NavLink>
-            <NavLink
-              to="/login"
-              onClick={() => setMenuOpen(false)}
-              className="text-2xl"
-            >
-              Log in
-            </NavLink>
+            {!isLoggedIn ? (
+              <NavLink
+                to="/login"
+                onClick={() => setMenuOpen(false)}
+                className="text-2xl"
+              >
+                Log in
+              </NavLink>
+            ) : (
+              <button
+                onClick={handleLogout}
+                className="text-2xl text-left hover:underline bg-transparent border-none cursor-pointer"
+              >
+                Log out
+              </button>
+            )}
           </div>
         </>
       )}
