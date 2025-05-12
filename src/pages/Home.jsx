@@ -28,13 +28,10 @@ export default function Home() {
       const result = await response.json();
       const newVenues = result.data || [];
 
-      if (reset) {
-        setAllVenues(newVenues);
-        setVenues(newVenues);
-      } else {
-        setAllVenues((prev) => [...prev, ...newVenues]);
-        setVenues((prev) => [...prev, ...newVenues]);
-      }
+      const all = reset ? newVenues : [...allVenues, ...newVenues];
+      const uniqueVenues = Array.from(new Map(all.map(v => [v.id, v])).values());
+      setAllVenues(uniqueVenues);
+      setVenues(uniqueVenues);
 
       // Sjekker om dette er siste side
       setIsLastPage(result.meta?.isLastPage);

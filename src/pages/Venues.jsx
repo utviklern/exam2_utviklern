@@ -44,8 +44,11 @@ export default function Venues() {
         page++;
       }
 
+      // fjerner id duplikater 
+      const uniqueVenues = Array.from(new Map(all.map(v => [v.id, v])).values());
+
       if (active) {
-        setVenues(all);
+        setVenues(uniqueVenues);
         setLoading(false);
       }
     }

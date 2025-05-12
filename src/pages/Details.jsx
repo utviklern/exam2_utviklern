@@ -43,6 +43,8 @@ export default function VenueDetails() {
         <img
           src={imageUrl}
           alt={imageAlt}
+          width={400}
+          height={300}
           className="w-full h-96 object-cover"
           loading="lazy"
         />
@@ -57,7 +59,7 @@ export default function VenueDetails() {
         </div>
       </div>
 
-      {/* facilities */}
+      {/* fasiliteter */}
       <div className="bg-white border-y border-gray-300 py-8 px-4 text-center">
         <h3 className="font-sans text-lg font-semibold mb-4">Facilities</h3>
         <div className="flex flex-col items-center gap-4 text-sm">
@@ -70,7 +72,7 @@ export default function VenueDetails() {
         </div>
       </div>
 
-      {/* details */}
+      {/* detaljer */}
       <div className="bg-white  border-gray-300 p-8 mt-8 max-w-3xl mx-auto">
         <h3 className="font-sans text-lg font-semibold mb-2">Details</h3>
         <div className="text-gray-700">
@@ -80,7 +82,7 @@ export default function VenueDetails() {
     </div>
   );
 }
-// display details and facilities
+// viser fasiliteter og detaljer
 
 function Facility({ icon, value }) {
   return (
