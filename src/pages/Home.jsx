@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import VenueCard from "../components/VenueCard";
+import SearchBar from "../components/SearchBar";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
   const [venues, setVenues] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [isLastPage, setIsLastPage] = useState(false);
+  const [allVenues, setAllVenues] = useState([]);
+  const navigate = useNavigate();
 
   const LIMIT = 12; // antall venues per side
 
@@ -24,7 +28,13 @@ export default function Home() {
       const result = await response.json();
       const newVenues = result.data || [];
 
-      setVenues((prev) => (reset ? newVenues : [...prev, ...newVenues]));
+      if (reset) {
+        setAllVenues(newVenues);
+        setVenues(newVenues);
+      } else {
+        setAllVenues((prev) => [...prev, ...newVenues]);
+        setVenues((prev) => [...prev, ...newVenues]);
+      }
 
       // Sjekker om dette er siste side
       setIsLastPage(result.meta?.isLastPage);
@@ -36,11 +46,27 @@ export default function Home() {
     }
   }
 
+  function handleSearch(query) {
+    const q = query.trim();
+    if (q) {
+      navigate(`/venues?search=${encodeURIComponent(q)}`);
+    }
+  }
+
   return (
     <div className="mt-page px-page font-sans">
       <h1 className="font-poppins text-2xl font-bold text-center text-blue mb-8">
         All venues
       </h1>
+
+      <div className="flex justify-center items-center min-h-[300px]">
+        <div className="bg-white bg-opacity-95 rounded-3xl shadow-xl p-8 w-full max-w-xl">
+          <SearchBar
+            onSearch={handleSearch}
+            placeholder="Destination, venue name, etc..."
+          />
+        </div>
+      </div>
 
       {/* loading */}
       {loading && venues.length === 0 && (

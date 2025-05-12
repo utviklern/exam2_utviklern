@@ -5,7 +5,7 @@ import Register from "./pages/Register";
 import Navbar from "./components/Navbar";
 import Login from "./pages/Login";
 import Footer from "./components/Footer";
-
+import Venues from "./pages/Venues";
 function App() {
   return (
     <>
@@ -14,6 +14,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/Register" element={<Register />} />
         <Route path="/Login" element={<Login />} />
+        <Route path="/venues" element={<Venues />} />
       </Routes>
       <Footer />
     </>
