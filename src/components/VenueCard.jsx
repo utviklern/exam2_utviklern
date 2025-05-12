@@ -35,8 +35,11 @@ export default function VenueCard({ venue }) {
         <img
           src={imageUrl}
           alt={imageAlt}
+          width={300}
+          height={200}
           className="w-full h-40 object-cover rounded-t-xl mb-2"
           onError={handleImgError}
+          loading="lazy"
         />
         <div className="p-4 flex flex-col flex-1">
           {/* navn og maks gjester */}

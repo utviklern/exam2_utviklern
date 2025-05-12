@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar";
 import Login from "./pages/Login";
 import Footer from "./components/Footer";
 import Venues from "./pages/Venues";
+import VenueDetails from "./pages/Details";
 function App() {
   return (
     <>
@@ -15,6 +16,7 @@ function App() {
         <Route path="/Register" element={<Register />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/venues" element={<Venues />} />
+        <Route path="/venues/:id" element={<VenueDetails />} />
       </Routes>
       <Footer />
     </>

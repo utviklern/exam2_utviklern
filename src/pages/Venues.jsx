@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import VenueCard from "../components/VenueCard";
 import SearchBar from "../components/SearchBar";
 
@@ -143,7 +143,9 @@ export default function Venues() {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {shownVenues.map((venue) => (
-            <VenueCard key={venue.id} venue={venue} />
+            <Link to={`/venues/${venue.id}`} key={venue.id} className="block hover:shadow-2xl transition-shadow">
+              <VenueCard venue={venue} />
+            </Link>
           ))}
         </div>
       )}

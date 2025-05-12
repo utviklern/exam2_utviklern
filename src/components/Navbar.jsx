@@ -37,6 +37,7 @@ export default function Navbar() {
             src={logo}
             alt="Holidaze logo"
             className="h-8 w-auto flex-shrink-0"
+            loading="lazy"
           />
         </Link>
       </div>
