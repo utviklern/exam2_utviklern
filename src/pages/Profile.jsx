@@ -173,7 +173,7 @@ export default function Profile() {
 
         <button
           onClick={() => handleCancelBooking(booking.id)}
-          className="bg-red text-white rounded-full py-2 font-semibold hover:bg-pink-600 transition mt-2"
+          className="bg-red text-white rounded-full py-1.5 px-4 text-sm font-semibold hover:bg-redDark transition mt-auto"
         >
           Cancel booking
         </button>
