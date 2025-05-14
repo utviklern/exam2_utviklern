@@ -8,7 +8,7 @@ import Footer from "./components/Footer";
 import Venues from "./pages/Venues";
 import VenueDetails from "./pages/Details";
 import Profile from "./pages/Profile";
-
+import Create from "./pages/Create";
 function App() {
   return (
     <>
@@ -20,6 +20,7 @@ function App() {
         <Route path="/venues" element={<Venues />} />
         <Route path="/venues/:id" element={<VenueDetails />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/create" element={<Create />} />
       </Routes>
       <Footer />
     </>

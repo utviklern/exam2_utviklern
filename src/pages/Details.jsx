@@ -51,7 +51,7 @@ export default function VenueDetails() {
 
   // for enklere tilgjengelighet
   const { name, price, location, description, maxGuests, meta = {} } = venue;
-  const { wifi, parking, pets, breakfast, bedrooms = 1 } = meta;
+  const { wifi, parking, pets, breakfast } = meta;
   const bookings = venue.bookings || [];
 
   // fetcher alle bookede datoer som array
@@ -159,7 +159,6 @@ export default function VenueDetails() {
         <h3 className="font-sans text-lg font-semibold mb-4">Facilities</h3>
         <div className="flex flex-col items-center gap-4 text-sm">
           <Facility icon="person" value={`${maxGuests} guest(s)`} />
-          <Facility icon="bed" value={`${bedrooms} bedroom(s)`} />
           <Facility icon="pets" value={pets ? "Pets allowed" : "No pets"} />
           <Facility icon="wifi" value={wifi ? "Wifi available" : "No wifi"} />
           <Facility
@@ -178,7 +177,7 @@ export default function VenueDetails() {
         <h3 className="font-sans text-lg font-semibold text-center mb-2">
           Details
         </h3>
-        <div className="text-gray-700">
+        <div className="text-gray-700 break-words">
           {description || "No description."}
         </div>
       </div>
