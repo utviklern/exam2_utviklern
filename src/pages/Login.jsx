@@ -24,8 +24,9 @@ export default function Login() {
         throw new Error(data.errors?.[0]?.message || "wrong email or password");
       }
 
-      // Lagrer access token local storage
+      // Lagrer access token og navn i local storage
       localStorage.setItem("accessToken", data.data.accessToken);
+      localStorage.setItem("profileName", data.data.name);
       setMessage("Login ok");
     } catch (err) {
       setMessage(err.message);

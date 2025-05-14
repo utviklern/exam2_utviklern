@@ -7,6 +7,8 @@ import Login from "./pages/Login";
 import Footer from "./components/Footer";
 import Venues from "./pages/Venues";
 import VenueDetails from "./pages/Details";
+import Profile from "./pages/Profile";
+
 function App() {
   return (
     <>
@@ -17,6 +19,7 @@ function App() {
         <Route path="/Login" element={<Login />} />
         <Route path="/venues" element={<Venues />} />
         <Route path="/venues/:id" element={<VenueDetails />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
       <Footer />
     </>
