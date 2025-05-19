@@ -1,10 +1,13 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../App";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState(null);
+  const navigate = useNavigate();
+  const { setIsLoggedIn } = useContext(AuthContext);
 
   // Håndterer innsending av skjema
   async function handleSubmit(e) {
@@ -27,7 +30,8 @@ export default function Login() {
       // Lagrer access token og navn i local storage
       localStorage.setItem("accessToken", data.data.accessToken);
       localStorage.setItem("profileName", data.data.name);
-      setMessage("Login ok");
+      setIsLoggedIn(true);
+      navigate("/profile");
     } catch (err) {
       setMessage(err.message);
     }

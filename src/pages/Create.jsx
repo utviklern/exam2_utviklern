@@ -69,7 +69,7 @@ export default function Create() {
       // request body
       const body = {
         name,
-        media: [{ url: mediaUrl, alt: mediaAlt }],
+        media: mediaUrl ? [{ url: mediaUrl, alt: mediaAlt }] : [],
         description,
         location: {
           address,
@@ -79,7 +79,7 @@ export default function Create() {
         },
         price: Number(price),
         maxGuests: Number(maxGuests),
-        rating: rating ? Number(rating) : undefined,
+        rating: rating ? Number(rating) : 0,
         meta: {
           wifi,
           parking,
@@ -97,7 +97,13 @@ export default function Create() {
         },
         body: JSON.stringify(body),
       });
-      if (!res.ok) throw new Error("Could not create venue");
+
+      const data = await res.json();
+      
+      if (!res.ok) {
+        throw new Error(data.errors?.[0]?.message || "could not create venue");
+      }
+
       setMessage("Venue created successfully!");
       // resetter felt
       setName("");
@@ -202,12 +208,12 @@ export default function Create() {
             onChange={(e) => setDescription(e.target.value)}
             required
             rows={4}
-            maxLength={150}
+            maxLength={1000}
             className="block w-full rounded-xl px-4 py-2 mt-1 mb-1 border-2 focus:outline-none focus:border-greenDark focus:ring-1 focus:ring-greenDark resize-none"
             placeholder=""
           />
           <div className="text-right text-xs text-gray-500">
-            {description.length} / 150
+            {description.length} / 1000
           </div>
         </label>
         {/* adresse */}
