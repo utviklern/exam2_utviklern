@@ -347,9 +347,12 @@ export default function Profile() {
                         )}
                       </div>
                       <div className="flex gap-4 mt-4">
-                        <button className="flex-1 bg-green text-black py-1 rounded-full font-semibold hover:bg-greenDark transition">
+                        <Link
+                          to={`/venues/${venue.id}/edit`}
+                          className="flex-1 bg-green text-black py-1 rounded-full font-semibold hover:bg-greenDark transition text-center"
+                        >
                           Edit
-                        </button>
+                        </Link>
                         <button
                           onClick={() => handleDeleteVenue(venue.id)}
                           className="flex-1 bg-red text-white py-1 rounded-full font-semibold hover:bg-redDark transition"
