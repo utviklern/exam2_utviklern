@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 export default function Edit() {
   // states for felt
@@ -165,6 +166,8 @@ export default function Edit() {
       </div>
     );
   }
+
+  if (loading) return <LoadingSpinner />;
 
   // hvis ikke venue manager eller ikke eier
   if (!isVenueManager || message === "You are not the owner of the venue") {

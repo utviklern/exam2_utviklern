@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 export default function Register() {
   // Skjemadata
@@ -98,6 +100,8 @@ export default function Register() {
       setLoading(false);
     }
   }
+
+  if (loading) return <LoadingSpinner />;
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-page-mobile sm:px-page mt-page-mobile sm:mt-page">
@@ -238,9 +242,9 @@ export default function Register() {
           {/* Login link */}
           <p className="text-xs sm:text-sm text-center mt-4">
             Already have an account?{" "}
-            <a href="/login" className="text-red hover:underline">
+            <Link to="/login" className="text-red hover:underline">
               Sign in
-            </a>
+            </Link>
           </p>
         </div>
       </div>

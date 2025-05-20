@@ -1,8 +1,9 @@
 // importerer komponenter
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 export default function VenueDetails() {
   // fetcher venue fra URL
@@ -39,8 +40,7 @@ export default function VenueDetails() {
     fetchVenue();
   }, [id]);
 
-  // viser loading/ikke funnet
-  if (loading) return <div className="text-center mt-12">Loading...</div>;
+  if (loading) return <LoadingSpinner />;
   if (!venue) return <div className="text-center mt-12">Venue not found</div>;
 
   // setter bilde og fallback om bilde mangler

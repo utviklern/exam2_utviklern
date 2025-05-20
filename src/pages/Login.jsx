@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../App";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -8,11 +9,13 @@ export default function Login() {
   const [message, setMessage] = useState(null);
   const navigate = useNavigate();
   const { setIsLoggedIn } = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
 
   // Håndterer innsending av skjema
   async function handleSubmit(e) {
     e.preventDefault();
     setMessage(null);
+    setLoading(true);
 
     try {
       const response = await fetch("https://v2.api.noroff.dev/auth/login", {
@@ -34,8 +37,12 @@ export default function Login() {
       navigate("/profile");
     } catch (err) {
       setMessage(err.message);
+    } finally {
+      setLoading(false);
     }
   }
+
+  if (loading) return <LoadingSpinner />;
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-page-mobile sm:px-page mt-page-mobile sm:mt-page">

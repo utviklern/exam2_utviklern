@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import Modal from "../components/Modal";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 // Fallback hvis biler ikke er tilgjengelig
 const fallbackAvatar =
@@ -22,6 +24,10 @@ export default function Profile() {
   const [isVenueManager, setIsVenueManager] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showCancelModal, setShowCancelModal] = useState(false);
+  const [venueToDelete, setVenueToDelete] = useState(null);
+  const [bookingToCancel, setBookingToCancel] = useState(null);
 
   const navigate = useNavigate();
   const accessToken = localStorage.getItem("accessToken");
@@ -96,8 +102,6 @@ export default function Profile() {
 
   // booking cancel
   async function handleCancelBooking(bookingId) {
-    if (!window.confirm("Are you sure you want to cancel the booking?")) return;
-
     try {
       const headers = {
         Authorization: `Bearer ${accessToken}`,
@@ -110,6 +114,8 @@ export default function Profile() {
       });
 
       setBookings((prev) => prev.filter((b) => b.id !== bookingId));
+      setShowCancelModal(false);
+      setBookingToCancel(null);
     } catch (err) {
       console.error("Error cancelling booking:", err);
     }
@@ -117,8 +123,6 @@ export default function Profile() {
 
   // Delete venue
   async function handleDeleteVenue(venueId) {
-    if (!window.confirm("Are you sure you want to delete this venue?")) return;
-
     try {
       const headers = {
         Authorization: `Bearer ${accessToken}`,
@@ -131,6 +135,8 @@ export default function Profile() {
       });
 
       setVenues((prev) => prev.filter((v) => v.id !== venueId));
+      setShowDeleteModal(false);
+      setVenueToDelete(null);
     } catch (err) {
       console.error("Error deleting:", err);
     }
@@ -138,11 +144,7 @@ export default function Profile() {
 
   // Loading
   if (loading)
-    return (
-      <div className="min-h-screen flex justify-center items-center">
-        loading...
-      </div>
-    );
+    return <LoadingSpinner />;
 
   // Error
   if (error)
@@ -207,7 +209,10 @@ export default function Profile() {
         </Link>
 
         <button
-          onClick={() => handleCancelBooking(booking.id)}
+          onClick={() => {
+            setBookingToCancel(booking.id);
+            setShowCancelModal(true);
+          }}
           className="bg-red text-white rounded-full py-1.5 px-4 text-sm font-semibold hover:bg-redDark transition mt-auto"
         >
           Cancel booking
@@ -357,7 +362,10 @@ export default function Profile() {
                           Edit
                         </Link>
                         <button
-                          onClick={() => handleDeleteVenue(venue.id)}
+                          onClick={() => {
+                            setVenueToDelete(venue.id);
+                            setShowDeleteModal(true);
+                          }}
                           className="flex-1 bg-red text-white py-1 rounded-full font-semibold hover:bg-redDark transition"
                         >
                           Delete
@@ -372,6 +380,30 @@ export default function Profile() {
           )}
         </section>
       </main>
+
+      {/* slett Venue Modal */}
+      <Modal
+        isOpen={showDeleteModal}
+        onClose={() => {
+          setShowDeleteModal(false);
+          setVenueToDelete(null);
+        }}
+        onConfirm={() => handleDeleteVenue(venueToDelete)}
+        title="Delete Venue"
+        message="Are you sure you want to delete the venue?"
+      />
+
+      {/* kanseller booking Modal */}
+      <Modal
+        isOpen={showCancelModal}
+        onClose={() => {
+          setShowCancelModal(false);
+          setBookingToCancel(null);
+        }}
+        onConfirm={() => handleCancelBooking(bookingToCancel)}
+        title="Cancel Booking"
+        message="Are you sure you want to cancel the booking?"
+      />
     </div>
   );
 }

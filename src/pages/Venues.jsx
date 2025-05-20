@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import VenueCard from "../components/VenueCard";
 import SearchBar from "../components/SearchBar";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 export default function Venues() {
   const location = useLocation();
@@ -108,6 +109,8 @@ export default function Venues() {
 
     return matchesSearch;
   });
+
+  if (loading) return <LoadingSpinner />;
 
   return (
     <div className="mt-page px-page font-sans">

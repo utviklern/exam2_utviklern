@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 export default function Create() {
   // states for felt
@@ -135,6 +137,8 @@ export default function Create() {
       </div>
     );
   }
+
+  if (loading) return <LoadingSpinner />;
 
   // hvis ikke venue manager
   if (!isVenueManager) {

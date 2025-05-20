@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import VenueCard from "../components/VenueCard";
 import SearchBar from "../components/SearchBar";
 import { useNavigate, Link } from "react-router-dom";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 export default function Home() {
   const [venues, setVenues] = useState([]);
@@ -50,6 +51,8 @@ export default function Home() {
     }
   }
 
+  if (loading) return <LoadingSpinner />;
+
   return (
     <div className="mt-page px-page font-sans">
       <h1 className="font-poppins text-2xl font-bold text-center text-blue mb-8">
@@ -64,11 +67,6 @@ export default function Home() {
           />
         </div>
       </div>
-
-      {/* loading */}
-      {loading && venues.length === 0 && (
-        <div className="text-center">Loading...</div>
-      )}
 
       {/* venue cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
