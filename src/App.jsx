@@ -11,6 +11,7 @@ import VenueDetails from "./pages/Details";
 import Profile from "./pages/Profile";
 import Create from "./pages/Create";
 import Edit from "./pages/Edit";
+import EditProfile from "./pages/EditProfile";
 
 // auth context
 export const AuthContext = createContext();
@@ -40,6 +41,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/create" element={<Create />} />
         <Route path="/venues/:id/edit" element={<Edit />} />
+        <Route path="/edit" element={<EditProfile />} />
       </Routes>
       <Footer />
     </AuthContext.Provider>

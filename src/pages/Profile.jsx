@@ -234,9 +234,12 @@ export default function Profile() {
             <p className="text-gray-600 text-center mb-4">{user.bio}</p>
           )}
 
-          <button className="bg-green text-primaryText px-6 py-2 rounded-full font-semibold hover:bg-greenDark transition mb-2">
+          <Link
+            to="/edit"
+            className="bg-green text-primaryText px-6 py-2 rounded-full font-semibold hover:bg-greenDark transition mb-2 inline-block"
+          >
             Edit profile
-          </button>
+          </Link>
 
           <hr className="w-full border-t-2 border-gray-300 my-4" />
           {/* hvis venue manager, vises venues meny, ellers vises bare bookings meny */}
