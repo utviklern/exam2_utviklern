@@ -234,9 +234,12 @@ export default function Profile() {
             <p className="text-gray-600 text-center mb-4">{user.bio}</p>
           )}
 
-          <button className="bg-green text-primaryText px-6 py-2 rounded-full font-semibold hover:bg-greenDark transition mb-2">
+          <Link
+            to="/edit"
+            className="bg-green text-primaryText px-6 py-2 rounded-full font-semibold hover:bg-greenDark transition mb-2 inline-block"
+          >
             Edit profile
-          </button>
+          </Link>
 
           <hr className="w-full border-t-2 border-gray-300 my-4" />
           {/* hvis venue manager, vises venues meny, ellers vises bare bookings meny */}
@@ -347,9 +350,12 @@ export default function Profile() {
                         )}
                       </div>
                       <div className="flex gap-4 mt-4">
-                        <button className="flex-1 bg-green text-black py-1 rounded-full font-semibold hover:bg-greenDark transition">
+                        <Link
+                          to={`/venues/${venue.id}/edit`}
+                          className="flex-1 bg-green text-black py-1 rounded-full font-semibold hover:bg-greenDark transition text-center"
+                        >
                           Edit
-                        </button>
+                        </Link>
                         <button
                           onClick={() => handleDeleteVenue(venue.id)}
                           className="flex-1 bg-red text-white py-1 rounded-full font-semibold hover:bg-redDark transition"
