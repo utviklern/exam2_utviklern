@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LoadingSpinner from "../components/LoadingSpinner";
+import Modal from "../components/Modal";
 
 export default function Register() {
   // Skjemadata
@@ -16,6 +17,8 @@ export default function Register() {
   const [message, setMessage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [errorField, setErrorField] = useState(null);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const navigate = useNavigate();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -93,7 +96,7 @@ export default function Register() {
         throw new Error(errMsg);
       }
 
-      setMessage("Account created successfully!");
+      setShowSuccessModal(true);
     } catch (err) {
       setMessage(err.message);
     } finally {
@@ -248,6 +251,22 @@ export default function Register() {
           </p>
         </div>
       </div>
+
+      {/* Success Modal */}
+      <Modal
+        isOpen={showSuccessModal}
+        onClose={() => {
+          setShowSuccessModal(false);
+          navigate("/login");
+        }}
+        onConfirm={() => {
+          setShowSuccessModal(false);
+          navigate("/login");
+        }}
+        title="Account created!"
+        message="Your account has been created. You can now log in."
+        showCancel={false}
+      />
     </div>
   );
 }

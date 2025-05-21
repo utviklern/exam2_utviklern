@@ -42,7 +42,7 @@ export default function EditProfile() {
   }, [accessToken, profileName, apiKey]);
 
   // håndterer submit
-  async function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setMessage("");
@@ -72,14 +72,14 @@ export default function EditProfile() {
         throw new Error(data.errors?.[0]?.message || "error updating profile");
       }
 
-      setMessage("Profile updated!");
+      window.scrollTo(0, 0);
       navigate("/profile");
     } catch (err) {
       setMessage(err.message);
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   if (profileLoading) {
     return (

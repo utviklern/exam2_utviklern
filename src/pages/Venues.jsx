@@ -149,7 +149,12 @@ export default function Venues() {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {shownVenues.map((venue) => (
-            <Link to={`/venues/${venue.id}`} key={venue.id} className="block hover:shadow-2xl transition-shadow">
+            <Link 
+              to={`/venues/${venue.id}`} 
+              key={venue.id} 
+              onClick={() => window.scrollTo(0, 0)}
+              className="block hover:shadow-2xl transition-shadow"
+            >
               <VenueCard venue={venue} />
             </Link>
           ))}

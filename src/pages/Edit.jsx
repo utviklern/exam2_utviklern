@@ -106,7 +106,7 @@ export default function Edit() {
   }
 
   // håndterer sumbitt
-  async function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setMessage("");
@@ -150,14 +150,14 @@ export default function Edit() {
         throw new Error(data.errors?.[0]?.message || "could not update venue");
       }
 
-      setMessage("Venue updated successfully!");
+      window.scrollTo(0, 0);
       navigate("/profile");
     } catch (err) {
       setMessage(err.message);
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   if (profileLoading) {
     return (
