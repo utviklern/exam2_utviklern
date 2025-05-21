@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import LoadingSpinner from "../components/LoadingSpinner";
+import Modal from "../components/Modal";
 
 export default function Create() {
   // states for felt
@@ -23,11 +26,13 @@ export default function Create() {
   const [message, setMessage] = useState("");
   const [isVenueManager, setIsVenueManager] = useState(null);
   const [profileLoading, setProfileLoading] = useState(true);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   //  auth og api
   const accessToken = localStorage.getItem("accessToken");
   const profileName = localStorage.getItem("profileName");
   const apiKey = import.meta.env.VITE_NOROFF_API_KEY;
+  const navigate = useNavigate();
 
   // sjekker om man er venue manager
   useEffect(() => {
@@ -54,6 +59,14 @@ export default function Create() {
     }
     fetchProfile();
   }, [accessToken, profileName, apiKey]);
+
+  useEffect(() => {
+    if (!accessToken || !profileName) {
+      navigate("/login");
+      return;
+    }
+    window.scrollTo(0, 0);
+  }, [accessToken, profileName, navigate]);
 
   // håndterer radio-knapper
   function handleRadio(setter, value) {
@@ -104,23 +117,7 @@ export default function Create() {
         throw new Error(data.errors?.[0]?.message || "could not create venue");
       }
 
-      setMessage("Venue created successfully!");
-      // resetter felt
-      setName("");
-      setMediaUrl("");
-      setMediaAlt("");
-      setDescription("");
-      setAddress("");
-      setCity("");
-      setZip("");
-      setCountry("");
-      setPrice("");
-      setMaxGuests("");
-      setRating("");
-      setWifi(false);
-      setParking(false);
-      setBreakfast(false);
-      setPets(false);
+      setShowSuccessModal(true);
     } catch (err) {
       setMessage(err.message);
     } finally {
@@ -135,6 +132,8 @@ export default function Create() {
       </div>
     );
   }
+
+  if (loading) return <LoadingSpinner />;
 
   // hvis ikke venue manager
   if (!isVenueManager) {
@@ -481,6 +480,24 @@ export default function Create() {
           </div>
         )}
       </form>
+
+      {/* Success Modal */}
+      <Modal
+        isOpen={showSuccessModal}
+        onClose={() => {
+          setShowSuccessModal(false);
+          window.scrollTo(0, 0);
+          navigate("/profile");
+        }}
+        onConfirm={() => {
+          setShowSuccessModal(false);
+          window.scrollTo(0, 0);
+          navigate("/profile");
+        }}
+        title="Venue Created!"
+        message="Your venue has been created successfully. You can view it in your profile."
+        showCancel={false}
+      />
     </div>
   );
 }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import VenueCard from "../components/VenueCard";
 import SearchBar from "../components/SearchBar";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 export default function Venues() {
   const location = useLocation();
@@ -109,6 +110,8 @@ export default function Venues() {
     return matchesSearch;
   });
 
+  if (loading) return <LoadingSpinner />;
+
   return (
     <div className="mt-page px-page font-sans">
       <h1 className="font-poppins text-2xl font-bold text-center text-blue mb-8">
@@ -146,7 +149,12 @@ export default function Venues() {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {shownVenues.map((venue) => (
-            <Link to={`/venues/${venue.id}`} key={venue.id} className="block hover:shadow-2xl transition-shadow">
+            <Link 
+              to={`/venues/${venue.id}`} 
+              key={venue.id} 
+              onClick={() => window.scrollTo(0, 0)}
+              className="block hover:shadow-2xl transition-shadow"
+            >
               <VenueCard venue={venue} />
             </Link>
           ))}

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 export default function Edit() {
   // states for felt
@@ -105,7 +106,7 @@ export default function Edit() {
   }
 
   // håndterer sumbitt
-  async function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setMessage("");
@@ -149,14 +150,14 @@ export default function Edit() {
         throw new Error(data.errors?.[0]?.message || "could not update venue");
       }
 
-      setMessage("Venue updated successfully!");
+      window.scrollTo(0, 0);
       navigate("/profile");
     } catch (err) {
       setMessage(err.message);
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   if (profileLoading) {
     return (
@@ -165,6 +166,8 @@ export default function Edit() {
       </div>
     );
   }
+
+  if (loading) return <LoadingSpinner />;
 
   // hvis ikke venue manager eller ikke eier
   if (!isVenueManager || message === "You are not the owner of the venue") {

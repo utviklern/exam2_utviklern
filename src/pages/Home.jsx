@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import VenueCard from "../components/VenueCard";
 import SearchBar from "../components/SearchBar";
 import { useNavigate, Link } from "react-router-dom";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 export default function Home() {
   const [venues, setVenues] = useState([]);
@@ -10,6 +11,7 @@ export default function Home() {
   const [isLastPage, setIsLastPage] = useState(false);
   const [allVenues, setAllVenues] = useState([]);
   const navigate = useNavigate();
+  const lastVenueRef = useRef(null);
 
   const LIMIT = 12; // antall venues per side
 
@@ -20,6 +22,7 @@ export default function Home() {
 
   // Henter venues fra api
   async function loadVenues(currentPage = 1, reset = false) {
+    const scrollPosition = window.scrollY;
     setLoading(true);
     try {
       const response = await fetch(
@@ -36,6 +39,13 @@ export default function Home() {
       // Sjekker om dette er siste side
       setIsLastPage(result.meta?.isLastPage);
       setPage(currentPage);
+
+      // Behold scroll posisjon
+      if (!reset) {
+        requestAnimationFrame(() => {
+          window.scrollTo(0, scrollPosition);
+        });
+      }
     } catch (error) {
       console.error("Failed to load venues:", error);
     } finally {
@@ -50,10 +60,12 @@ export default function Home() {
     }
   }
 
+  if (loading) return <LoadingSpinner />;
+
   return (
     <div className="mt-page px-page font-sans">
       <h1 className="font-poppins text-2xl font-bold text-center text-blue mb-8">
-        All venues
+        Welcome to Holidaze!
       </h1>
 
       <div className="flex justify-center items-center min-h-[300px]">
@@ -65,15 +77,16 @@ export default function Home() {
         </div>
       </div>
 
-      {/* loading */}
-      {loading && venues.length === 0 && (
-        <div className="text-center">Loading...</div>
-      )}
-
       {/* venue cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        {venues.map((venue) => (
-          <Link to={`/venues/${venue.id}`} key={venue.id} className="block hover:shadow-2xl transition-shadow">
+        {venues.map((venue, index) => (
+          <Link 
+            to={`/venues/${venue.id}`} 
+            key={venue.id} 
+            onClick={() => window.scrollTo(0, 0)}
+            className="block hover:shadow-2xl transition-shadow"
+            ref={index === venues.length - 1 ? lastVenueRef : null}
+          >
             <VenueCard venue={venue} />
           </Link>
         ))}
@@ -83,7 +96,15 @@ export default function Home() {
       {!isLastPage && venues.length > 0 && (
         <div className="flex justify-center mt-10">
           <button
-            onClick={() => loadVenues(page + 1)}
+            onClick={() => {
+              const lastVenue = lastVenueRef.current;
+              const lastVenuePosition = lastVenue?.getBoundingClientRect().top + window.scrollY;
+              loadVenues(page + 1).then(() => {
+                if (lastVenuePosition) {
+                  window.scrollTo(0, lastVenuePosition);
+                }
+              });
+            }}
             disabled={loading}
             className="bg-green text-black rounded-full px-10 py-3 text-lg hover:bg-greenDark"
           >

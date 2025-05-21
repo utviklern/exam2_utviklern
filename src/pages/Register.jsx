@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import LoadingSpinner from "../components/LoadingSpinner";
+import Modal from "../components/Modal";
 
 export default function Register() {
   // Skjemadata
@@ -14,6 +17,8 @@ export default function Register() {
   const [message, setMessage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [errorField, setErrorField] = useState(null);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const navigate = useNavigate();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -91,13 +96,15 @@ export default function Register() {
         throw new Error(errMsg);
       }
 
-      setMessage("Account created successfully!");
+      setShowSuccessModal(true);
     } catch (err) {
       setMessage(err.message);
     } finally {
       setLoading(false);
     }
   }
+
+  if (loading) return <LoadingSpinner />;
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-page-mobile sm:px-page mt-page-mobile sm:mt-page">
@@ -238,12 +245,28 @@ export default function Register() {
           {/* Login link */}
           <p className="text-xs sm:text-sm text-center mt-4">
             Already have an account?{" "}
-            <a href="/login" className="text-red hover:underline">
+            <Link to="/login" className="text-red hover:underline">
               Sign in
-            </a>
+            </Link>
           </p>
         </div>
       </div>
+
+      {/* Success Modal */}
+      <Modal
+        isOpen={showSuccessModal}
+        onClose={() => {
+          setShowSuccessModal(false);
+          navigate("/login");
+        }}
+        onConfirm={() => {
+          setShowSuccessModal(false);
+          navigate("/login");
+        }}
+        title="Account created!"
+        message="Your account has been created. You can now log in."
+        showCancel={false}
+      />
     </div>
   );
 }

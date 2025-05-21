@@ -17,7 +17,7 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="bg-green max-[1053px]:bg-transparent w-full py-4 px-4 flex items-center relative z-50">
+    <nav className="bg-green max-[1053px]:bg-transparent w-full py-4 px-4 flex items-center relative z-50 font-sans">
       <div className="flex flex-1 min-w-0 flex-row max-[1053px]:flex-row-reverse items-center justify-between">
         {/* Hamburger */}
         <button
@@ -48,19 +48,38 @@ export default function Navbar() {
       <div className="flex-1 flex justify-center gap-20 max-[1053px]:hidden">
         <NavLink
           to="/"
-          className="font-bold text-base sm:text-lg md:text-xl hover:underline"
+          end
+          className={({ isActive }) =>
+            `text-base sm:text-lg md:text-xl hover:underline ${
+              isActive ? "font-bold text-black underline" : ""
+            }`
+          }
         >
           Home
         </NavLink>
         <NavLink
           to="/venues"
-          className="text-base sm:text-lg md:text-xl hover:underline"
+          className={({ isActive }) =>
+            `text-base sm:text-lg md:text-xl hover:underline ${
+              isActive || window.location.pathname.match(/^\/venues\/[^/]+$/)
+                ? "font-bold text-black underline"
+                : ""
+            }`
+          }
         >
           Venues
         </NavLink>
         <NavLink
           to="/profile"
-          className="text-base sm:text-lg md:text-xl hover:underline"
+          className={({ isActive }) =>
+            `text-base sm:text-lg md:text-xl hover:underline ${
+              isActive || 
+              window.location.pathname.includes("/create") || 
+              window.location.pathname.includes("/edit")
+                ? "font-bold text-black underline"
+                : ""
+            }`
+          }
         >
           Profile
         </NavLink>
@@ -70,7 +89,13 @@ export default function Navbar() {
         {!isLoggedIn ? (
           <NavLink
             to="/login"
-            className="text-base sm:text-lg md:text-xl hover:underline"
+            className={({ isActive }) =>
+              `text-base sm:text-lg md:text-xl hover:underline ${
+                isActive || window.location.pathname.includes("/register")
+                  ? "font-bold text-black underline"
+                  : ""
+              }`
+            }
           >
             Login
           </NavLink>
@@ -98,22 +123,39 @@ export default function Navbar() {
           <div className="absolute left-1/2 top-full -translate-x-1/2 mt-4 bg-white shadow-xl rounded-xl p-8 flex flex-col gap-6 min-w-[80vw] max-w-md z-50">
             <NavLink
               to="/"
+              end
               onClick={() => setMenuOpen(false)}
-              className="font-bold text-2xl"
+              className={({ isActive }) =>
+                `text-2xl ${isActive ? "font-bold text-black underline" : ""}`
+              }
             >
               Home
             </NavLink>
             <NavLink
               to="/venues"
               onClick={() => setMenuOpen(false)}
-              className="text-2xl"
+              className={({ isActive }) =>
+                `text-2xl ${
+                  isActive || window.location.pathname.match(/^\/venues\/[^/]+$/)
+                    ? "font-bold text-black underline"
+                    : ""
+                }`
+              }
             >
               Venues
             </NavLink>
             <NavLink
               to="/profile"
               onClick={() => setMenuOpen(false)}
-              className="text-2xl"
+              className={({ isActive }) =>
+                `text-2xl ${
+                  isActive || 
+                  window.location.pathname.includes("/create") || 
+                  window.location.pathname.includes("/edit")
+                    ? "font-bold text-black underline"
+                    : ""
+                }`
+              }
             >
               Profile
             </NavLink>
@@ -121,7 +163,13 @@ export default function Navbar() {
               <NavLink
                 to="/login"
                 onClick={() => setMenuOpen(false)}
-                className="text-2xl"
+                className={({ isActive }) =>
+                  `text-2xl ${
+                    isActive || window.location.pathname.includes("/register")
+                      ? "font-bold text-black underline"
+                      : ""
+                  }`
+                }
               >
                 Log in
               </NavLink>
