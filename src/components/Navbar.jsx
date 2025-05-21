@@ -61,7 +61,8 @@ export default function Navbar() {
           to="/venues"
           className={({ isActive }) =>
             `text-base sm:text-lg md:text-xl hover:underline ${
-              isActive || window.location.pathname.match(/^\/venues\/[^/]+$/)
+              (isActive && window.location.pathname === "/venues") ||
+              window.location.pathname.match(/^\/venues\/[^/]+$/)
                 ? "font-bold text-black underline"
                 : ""
             }`
@@ -136,7 +137,8 @@ export default function Navbar() {
               onClick={() => setMenuOpen(false)}
               className={({ isActive }) =>
                 `text-2xl ${
-                  isActive || window.location.pathname.match(/^\/venues\/[^/]+$/)
+                  (isActive && window.location.pathname === "/venues") ||
+                  window.location.pathname.match(/^\/venues\/[^/]+$/)
                     ? "font-bold text-black underline"
                     : ""
                 }`
