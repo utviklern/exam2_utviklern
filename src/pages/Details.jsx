@@ -27,7 +27,7 @@ export default function VenueDetails() {
       try {
         setLoading(true);
         const res = await fetch(
-          `https://v2.api.noroff.dev/holidaze/venues/${id}?_bookings=true`
+          `https://v2.api.noroff.dev/holidaze/venues/${id}?_bookings=true&_owner=true`
         );
         const json = await res.json();
         setVenue(json.data);
@@ -145,12 +145,15 @@ export default function VenueDetails() {
         />
         <div className="p-6">
           <h1 className="font-poppins text-xl font-bold mb-1">{name}</h1>
-          <div className="text-gray-600 mb-2">
+          <div className="text-gray-600 mb-2 break-words">
             {[location?.address, location?.city, location?.country]
               .filter(Boolean)
               .join(", ")}
           </div>
           <div className="font-bold mb-2 text-red">{price} NOK / night</div>
+          <p className="font-sans text-primaryText text-sm mt-2">
+            <span className="font-semibold">Owner:</span> {venue.owner?.name}
+          </p>
         </div>
       </div>
 
