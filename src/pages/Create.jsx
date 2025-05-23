@@ -20,6 +20,7 @@ export default function Create() {
   const [parking, setParking] = useState(false);
   const [breakfast, setBreakfast] = useState(false);
   const [pets, setPets] = useState(false);
+  const [media, setMedia] = useState([{ url: "", alt: "" }]);
 
   // states for lasting, melding og tilgang
   const [loading, setLoading] = useState(false);
@@ -73,6 +74,20 @@ export default function Create() {
     setter(value === "true");
   }
 
+  function addImageField() {
+    setMedia([...media, { url: "", alt: "" }]);
+  }
+
+  function removeImageField(idx) {
+    setMedia(media.filter((_, i) => i !== idx));
+  }
+
+  function updateImageField(idx, field, value) {
+    const newMedia = [...media];
+    newMedia[idx][field] = value;
+    setMedia(newMedia);
+  }
+
   // håndterer sumbitt
   async function handleSubmit(e) {
     e.preventDefault();
@@ -82,7 +97,7 @@ export default function Create() {
       // request body
       const body = {
         name,
-        media: mediaUrl ? [{ url: mediaUrl, alt: mediaAlt }] : [],
+        media: media.filter(img => img.url.trim() !== ""),
         description,
         location: {
           address,
@@ -175,29 +190,50 @@ export default function Create() {
           />
         </label>
         {/* img */}
-        <label className="font-sans font-semibold">
-          image url
-          <input
-            name="mediaUrl"
-            value={mediaUrl}
-            onChange={(e) => setMediaUrl(e.target.value)}
-            required
-            className="block w-full rounded-full px-4 py-2 mt-1 mb-2 border-2 focus:outline-none focus:border-greenDark focus:ring-1 focus:ring-greenDark"
-            placeholder="add image url here"
-          />
-        </label>
-        {/* alt */}
-        <label className="font-sans font-semibold">
-          alt text
-          <input
-            name="mediaAlt"
-            value={mediaAlt}
-            onChange={(e) => setMediaAlt(e.target.value)}
-            required
-            className="block w-full rounded-full px-4 py-2 mt-1 mb-2 border-2 focus:outline-none focus:border-greenDark focus:ring-1 focus:ring-greenDark"
-            placeholder="describe the image"
-          />
-        </label>
+        <div className="mb-2">
+          <span className="font-sans font-semibold">Images</span>
+          {media.map((img, idx) => (
+            <div key={idx} className="flex flex-col sm:flex-row gap-2 mb-2">
+              <input
+                type="text"
+                placeholder="img url"
+                value={img.url}
+                onChange={(e) => updateImageField(idx, "url", e.target.value)}
+                className="flex-1 rounded-full px-4 py-2 border-2 focus:outline-none focus:border-greenDark focus:ring-1 focus:ring-greenDark"
+                required={idx === 0}
+              />
+              <input
+                type="text"
+                placeholder="describe the image"
+                value={img.alt}
+                onChange={(e) => updateImageField(idx, "alt", e.target.value)}
+                className="flex-1 rounded-full px-4 py-2 border-2 focus:outline-none focus:border-greenDark focus:ring-1 focus:ring-greenDark"
+                required={idx === 0}
+              />
+              {media.length > 1 && (
+                <button
+                  type="button"
+                  onClick={() => removeImageField(idx)}
+                  className="text-red font-bold px-2"
+                >
+                  &times;
+                </button>
+              )}
+            </div>
+          ))}
+          {media.length < 5 && (
+            <button
+              type="button"
+              onClick={addImageField}
+              className="bg-green text-black px-2 py-1 rounded-full text-xs font-semibold mt-1 hover:bg-greenDark"
+            >
+              Add another image
+            </button>
+          )}
+          {media.length >= 5 && (
+            <div className="text-xs text-red mt-1">only 5 images allowed</div>
+          )}
+        </div>
         {/* beskrivelse */}
         <label className="font-sans font-semibold">
           Description
