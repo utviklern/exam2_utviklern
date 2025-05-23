@@ -43,12 +43,6 @@ export default function VenueDetails() {
   if (loading) return <LoadingSpinner />;
   if (!venue) return <div className="text-center mt-12">Venue not found</div>;
 
-  // setter bilde og fallback om bilde mangler
-  const imageUrl =
-    venue.media?.[0]?.url ||
-    "https://cdn.pixabay.com/photo/2017/11/10/04/47/image-2935360_1280.png";
-  const imageAlt = venue.media?.[0]?.alt || venue.name;
-
   // for enklere tilgjengelighet
   const { name, price, location, description, maxGuests, meta = {} } = venue;
   const { wifi, parking, pets, breakfast } = meta;
@@ -135,14 +129,32 @@ export default function VenueDetails() {
     <div className="bg-background min-h-screen font-sans">
       {/* Header / img */}
       <div className="bg-white">
-        <img
-          src={imageUrl}
-          alt={imageAlt}
-          width={400}
-          height={300}
-          className="w-full h-96 object-cover"
-          loading="lazy"
-        />
+        {/* bilder */}
+        {venue.media && venue.media.length > 1 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 p-2">
+            {venue.media.map((img, idx) => (
+              <img
+                key={idx}
+                src={img.url}
+                alt={img.alt || venue.name}
+                className="w-full h-64 object-cover rounded"
+              />
+            ))}
+          </div>
+        ) : (
+          <img
+            src={venue.media?.[0]?.url || "https://cdn.pixabay.com/photo/2017/11/10/04/47/image-2935360_1280.png"}
+            alt={venue.media?.[0]?.alt || venue.name}
+            width={400}
+            height={300}
+            className="w-full h-96 object-cover"
+            loading="lazy"
+            onError={e => {
+              e.target.onerror = null;
+              e.target.src = "https://cdn.pixabay.com/photo/2017/11/10/04/47/image-2935360_1280.png";
+            }}
+          />
+        )}
         <div className="p-6">
           <h1 className="font-poppins text-xl font-bold mb-1">{name}</h1>
           <div className="text-gray-600 mb-2 break-words">

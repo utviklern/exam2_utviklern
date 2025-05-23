@@ -34,7 +34,7 @@ export default function Venues() {
 
       while (!lastPage) {
         const res = await fetch(
-          `https://v2.api.noroff.dev/holidaze/venues?page=${page}&limit=100`
+          `https://v2.api.noroff.dev/holidaze/venues?page=${page}&limit=100&sort=created&sortOrder=desc`
         );
         const data = await res.json();
 
