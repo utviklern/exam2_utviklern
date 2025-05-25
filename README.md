@@ -5,7 +5,7 @@
 https://jolly-crostata-236ed5.netlify.app/
 
 ## Design & Planning
-- [Figma Design](https://www.figma.com/proto/3RlzJLgjwzulDmyyOebmfU/Exam-project?node-id=2040-999&t=zBM8dDQrVVYmi8uv-1) - Desktop, mobile, and style guide
+- [Figma Design](https://www.figma.com/design/3RlzJLgjwzulDmyyOebmfU/Exam-project?node-id=2040-999&p=f&t=m2HrK6Ei7wEL7R8a-0) - Desktop, mobile, and style guide
 - [GitHub Projects](https://github.com/users/utviklern/projects/7/views/1) - Planning 
 - [GitHub Roadmap](https://github.com/users/utviklern/projects/7/views/4) - Project timeline/roadmap
 
