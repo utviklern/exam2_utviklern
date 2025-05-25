@@ -43,7 +43,7 @@ https://jolly-crostata-236ed5.netlify.app/
 
 1. Clone the repository
 ```bash
-git clone [https://github.com/utviklern/exam2_utviklern.git]
+git clone https://github.com/utviklern/exam2_utviklern.git
 ```
 
 2. Install dependencies in terminal
